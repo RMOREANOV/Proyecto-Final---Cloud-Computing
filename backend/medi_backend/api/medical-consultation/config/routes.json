@@ -1,0 +1,60 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/all-data-medical-consultation",
+      "handler": "medical-consultation.allDataMedicalConsultation",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/medical-consultations",
+      "handler": "medical-consultation.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/medical-consultations/count",
+      "handler": "medical-consultation.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/medical-consultations/:id",
+      "handler": "medical-consultation.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/medical-consultations",
+      "handler": "medical-consultation.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/medical-consultations/:id",
+      "handler": "medical-consultation.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/medical-consultations/:id",
+      "handler": "medical-consultation.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

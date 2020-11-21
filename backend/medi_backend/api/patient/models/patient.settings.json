@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patients",
+  "info": {
+    "name": "Patient",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "photo": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "phone": {
+      "type": "string"
+    },
+    "gender": {
+      "model": "gender",
+      "via": "patients"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "patient"
+    },
+    "medical_consultations": {
+      "via": "patient",
+      "collection": "medical-consultation"
+    }
+  }
+}

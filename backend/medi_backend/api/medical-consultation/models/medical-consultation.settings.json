@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "medical_consultations",
+  "info": {
+    "name": "medicalConsultation",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "datetime": {
+      "type": "datetime"
+    },
+    "isVisible": {
+      "type": "boolean",
+      "default": true
+    },
+    "doctor": {
+      "model": "doctor",
+      "via": "medical_consultations"
+    },
+    "patient": {
+      "model": "patient",
+      "via": "medical_consultations"
+    }
+  }
+}

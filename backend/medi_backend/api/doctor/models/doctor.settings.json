@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "doctors",
+  "info": {
+    "name": "Doctor",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "photo": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "description": {
+      "type": "text"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "gender": {
+      "model": "gender",
+      "via": "doctors"
+    },
+    "specialty": {
+      "via": "doctors",
+      "model": "specialty"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "doctor"
+    },
+    "medical_consultations": {
+      "via": "doctor",
+      "collection": "medical-consultation"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "specialties",
+  "info": {
+    "name": "Specialty",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "doctors": {
+      "collection": "doctor",
+      "via": "specialty"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pictures",
+  "info": {
+    "name": "Picture",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "sort": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "unique": true
+    }
+  }
+}
