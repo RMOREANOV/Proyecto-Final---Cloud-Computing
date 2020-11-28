@@ -4,6 +4,7 @@ import 'package:medi_team/src/api/navigatorPush.dart' as NavigatorPush;
 import 'package:flutter/material.dart';
 import 'package:medi_team/src/screens/homePageWithAuth.dart';
 import 'package:medi_team/src/screens/homePageWithoutAuth.dart';
+import 'package:medi_team/src/screens/pictures.dart';
 
 import 'package:medi_team/src/api/auth.dart' as auth;
 
@@ -15,6 +16,7 @@ switchScreen(int index, BuildContext context) async {
           (token == null ? HomePageWithoutAuth() : HomePageWithAuth()));
       break;
     case 1:
+      //NavigatorPush.navigatorPushReplacement(context, Pictures());
       break;
     case 2:
       break;

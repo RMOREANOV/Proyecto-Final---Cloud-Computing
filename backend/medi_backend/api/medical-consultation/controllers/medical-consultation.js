@@ -62,11 +62,16 @@ module.exports = {
     async allDataMedicalConsultation(ctx) {
         const genders = await strapi.services.gender.find({});
         const specialties = await strapi.services.specialty.find({_sort: 'name:asc'}, ['doctors','doctors.photo']);
-        const medicalConsultations = await strapi.services['medical-consultation'].find({isVisible: true, patient: null, _sort: 'datetime:asc'});
+        const medicalConsultations = await strapi.services['medical-consultation'].find({isVisible: true, _sort: 'datetime:asc'});
         var doctorsIdInmedicalConsultations = []
         for(var i=0;i<medicalConsultations.length;i++){
-            if(!doctorsIdInmedicalConsultations.includes(medicalConsultations[i]['doctor']['id'])){
-                doctorsIdInmedicalConsultations.push(medicalConsultations[i]['doctor']['id']);
+            if(medicalConsultations[i]['patient']!=null){
+                medicalConsultations.splice(i,1);
+                i--;
+            }else{
+                if(!doctorsIdInmedicalConsultations.includes(medicalConsultations[i]['doctor']['id'])){
+                    doctorsIdInmedicalConsultations.push(medicalConsultations[i]['doctor']['id']);
+                }
             }
         }
         for(var i=0;i<specialties.length;i++){
@@ -84,8 +89,10 @@ module.exports = {
 
         for(var i=0;i<medicalConsultations.length;i++){
             var medicalConsultationsDatetimeUTC = new Date(medicalConsultations[i]['datetime']).getTime()
-            var medicalConsultationsDatetimeOffset = new Date(medicalConsultations[i]['datetime']).getTimezoneOffset() * 60000;
-            var medicalConsultationsDatetimeLocale = medicalConsultationsDatetimeUTC - medicalConsultationsDatetimeOffset;
+
+            //var medicalConsultationsDatetimeOffset = new Date(medicalConsultations[i]['datetime']).getTimezoneOffset() * 60000;
+            var medicalConsultationsDatetimeOffset = parseInt(ctx.query.timezoneOffsetMilliseconds);
+            var medicalConsultationsDatetimeLocale = medicalConsultationsDatetimeUTC + medicalConsultationsDatetimeOffset;
             var medicalConsultationsDatetimeLocaleDatetime = new Date(medicalConsultationsDatetimeLocale)
             medicalConsultations[i]['localeDateMiliseconds'] = getDateMiliseconds(medicalConsultationsDatetimeLocaleDatetime);
             medicalConsultations[i]['localeDate'] = getDate(medicalConsultationsDatetimeLocaleDatetime);         

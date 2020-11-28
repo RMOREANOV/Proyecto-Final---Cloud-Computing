@@ -32,6 +32,7 @@ class HomePageWithAuthState extends State<HomePageWithAuth> {
   List<dynamic> medicalConsultations = [];
   int countMedicalConsultations = 0;
   Timer clockTimerGetMedicalConsultations;
+  Timer clockTimerNotification;
   var patient;
   void logout() async {
     await sharedPreferences.clearAppStorage();
@@ -93,7 +94,9 @@ class HomePageWithAuthState extends State<HomePageWithAuth> {
         countMedicalConsultations = medicalConsultations.length;
         for (var i = 0; i < medicalConsultations.length; i++) {
           if (timeController.isMedicalConsultationClose(
-              DateTime.parse(medicalConsultations[i]['datetime']).toLocal())) {
+                  DateTime.parse(medicalConsultations[i]['datetime'])
+                      .toLocal()) &&
+              medicalConsultations[i]['isVisible'] == true) {
             timeController.setMedicalConsultationClose(
                 medicalConsultations[i]['datetime']);
 
@@ -121,14 +124,23 @@ class HomePageWithAuthState extends State<HomePageWithAuth> {
       await getMedicalConsultations();
     }();
     clockTimerGetMedicalConsultations =
-        Timer.periodic(new Duration(seconds: 60), (timer) async {
+        Timer.periodic(new Duration(seconds: 15), (timer) async {
       await getMedicalConsultations();
+    });
+
+    clockTimerNotification =
+        Timer.periodic(new Duration(minutes: 30), (timer) async {
+      if (timeController.isDateNowEvery30Minutes()) {
+        await notificationController
+            .showNotification(flutterLocalNotificationsPlugin);
+      }
     });
   }
 
   @override
   void dispose() {
     clockTimerGetMedicalConsultations.cancel();
+    clockTimerNotification.cancel();
     super.dispose();
   }
 
@@ -342,127 +354,195 @@ class HomePageWithAuthState extends State<HomePageWithAuth> {
                   itemCount: medicalConsultations.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 10.0),
-                      padding: EdgeInsets.all(5.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  padding: EdgeInsets.only(right: 5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black
-                                                .withOpacity(0.05))),
-                                    child: SizedBox(
-                                        width: 60,
-                                        height: 60,
-                                        child: Image(
-                                          image: AssetImage(
-                                              'assets/images/clock.jpg'),
-                                        )),
-                                  )),
-                              Container(
-                                  height: 60,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          timeController.dateTimeToTitle(
-                                              DateTime.parse(
-                                                      medicalConsultations[
-                                                          index]['datetime'])
-                                                  .toLocal()),
-                                          style: new TextStyle(
-                                              color:
-                                                  Colors.black.withOpacity(0.6),
-                                              fontWeight: FontWeight.bold)),
-                                      Container(
-                                        padding:
-                                            EdgeInsets.only(top: 5, right: 2),
-                                        child: Text(
-                                            timeController.datetimeToSubtitle(
-                                                DateTime.parse(
-                                                        medicalConsultations[
-                                                            index]['datetime'])
-                                                    .toLocal()),
-                                            textAlign: TextAlign.justify,
-                                            style: new TextStyle(
-                                                color: Colors.black
-                                                    .withOpacity(0.6))),
-                                      )
-                                    ],
-                                  )),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  padding: EdgeInsets.only(right: 5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black
-                                                .withOpacity(0.05))),
-                                    child: SizedBox(
-                                        width: 60,
-                                        height: 60,
-                                        child: Image.network(
-                                            "http://10.0.2.2:1337" +
+                        margin: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 10.0),
+                        padding: EdgeInsets.all(5.0),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: medicalConsultations[index]['isVisible'] ==
+                                  true
+                              ? (timeController.isMedicalConsultationNow(
+                                      DateTime.parse(medicalConsultations[index]
+                                              ['datetime'])
+                                          .toLocal())
+                                  ? Colors.orange.withOpacity(0.2)
+                                  : Colors.green.withOpacity(0.2))
+                              : Colors.red.withOpacity(0.2),
+                          border: Border.all(
+                            color: medicalConsultations[index]['isVisible'] ==
+                                    true
+                                ? (timeController.isMedicalConsultationNow(
+                                        DateTime.parse(
                                                 medicalConsultations[index]
-                                                        ['doctor']['photo']
-                                                    ['url'])),
-                                  )),
-                              Container(
-                                  height: 60,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          "Dr. " +
-                                              medicalConsultations[index]
-                                                  ['doctor']['firstname'] +
-                                              " " +
-                                              medicalConsultations[index]
-                                                  ['doctor']['lastname'],
-                                          style: new TextStyle(
-                                              color:
-                                                  Colors.black.withOpacity(0.6),
-                                              fontWeight: FontWeight.bold)),
-                                      Container(
-                                        padding:
-                                            EdgeInsets.only(top: 5, right: 2),
-                                        child: Text(
-                                            medicalConsultations[index]
-                                                ['doctor']['specialty']['name'],
-                                            textAlign: TextAlign.justify,
-                                            style: new TextStyle(
-                                                color: Colors.black
-                                                    .withOpacity(0.6))),
-                                      )
-                                    ],
-                                  )),
-                            ],
-                          )
-                        ],
-                      ),
-                    );
+                                                    ['datetime'])
+                                            .toLocal())
+                                    ? Colors.orange[400]
+                                    : Colors.green[800])
+                                : Colors.red[400],
+                            width: 1,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.only(right: 5),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.black
+                                                      .withOpacity(0.05))),
+                                          child: SizedBox(
+                                              width: 60,
+                                              height: 60,
+                                              child: Image(
+                                                image: AssetImage(
+                                                    'assets/images/clock.jpg'),
+                                              )),
+                                        )),
+                                    Container(
+                                        height: 60,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                                timeController.dateTimeToTitle(
+                                                    DateTime.parse(
+                                                            medicalConsultations[
+                                                                    index]
+                                                                ['datetime'])
+                                                        .toLocal()),
+                                                style: new TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.6),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 5, right: 2),
+                                              child: Text(
+                                                  timeController.datetimeToSubtitle(
+                                                      DateTime.parse(
+                                                              medicalConsultations[
+                                                                      index]
+                                                                  ['datetime'])
+                                                          .toLocal()),
+                                                  textAlign: TextAlign.justify,
+                                                  style: new TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.6))),
+                                            )
+                                          ],
+                                        )),
+                                  ],
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.only(right: 5),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.black
+                                                      .withOpacity(0.05))),
+                                          child: SizedBox(
+                                              width: 60,
+                                              height: 60,
+                                              child: Image.network(
+                                                  "http://10.0.2.2:1337" +
+                                                      medicalConsultations[
+                                                              index]['doctor']
+                                                          ['photo']['url'])),
+                                        )),
+                                    Container(
+                                        height: 60,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                                "Dr. " +
+                                                    medicalConsultations[index]
+                                                            ['doctor']
+                                                        ['firstname'] +
+                                                    " " +
+                                                    medicalConsultations[index]
+                                                        ['doctor']['lastname'],
+                                                style: new TextStyle(
+                                                    color: Colors.black
+                                                        .withOpacity(0.6),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  top: 5, right: 2),
+                                              child: Text(
+                                                  medicalConsultations[index]
+                                                          ['doctor']
+                                                      ['specialty']['name'],
+                                                  textAlign: TextAlign.justify,
+                                                  style: new TextStyle(
+                                                      color: Colors.black
+                                                          .withOpacity(0.6))),
+                                            )
+                                          ],
+                                        )),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                padding: EdgeInsets.all(1),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: medicalConsultations[index]
+                                                ['isVisible'] ==
+                                            true
+                                        ? (timeController
+                                                .isMedicalConsultationNow(
+                                                    DateTime.parse(
+                                                            medicalConsultations[
+                                                                    index]
+                                                                ['datetime'])
+                                                        .toLocal())
+                                            ? Colors.orange[400]
+                                            : Colors.green[800])
+                                        : Colors.red[400],
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Text(
+                                  medicalConsultations[index]['isVisible'] ==
+                                          true
+                                      ? (timeController
+                                              .isMedicalConsultationNow(
+                                                  DateTime.parse(
+                                                          medicalConsultations[
+                                                                  index]
+                                                              ['datetime'])
+                                                      .toLocal())
+                                          ? "Ahora"
+                                          : "Por realizar")
+                                      : "Terminado",
+                                  style: TextStyle(fontSize: 10.5),
+                                ),
+                              ),
+                            )
+                          ],
+                        ));
                   },
                 ),
               ),
