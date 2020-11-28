@@ -16,7 +16,7 @@ switchScreen(int index, BuildContext context) async {
           (token == null ? HomePageWithoutAuth() : HomePageWithAuth()));
       break;
     case 1:
-      //NavigatorPush.navigatorPushReplacement(context, Pictures());
+      NavigatorPush.navigatorPushReplacement(context, Pictures());
       break;
     case 2:
       break;
