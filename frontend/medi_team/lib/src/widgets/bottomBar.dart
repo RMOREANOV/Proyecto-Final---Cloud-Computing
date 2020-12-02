@@ -2,6 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medi_team/src/api/navigatorPush.dart' as NavigatorPush;
 
 import 'package:flutter/material.dart';
+import 'package:medi_team/src/screens/chatbot.dart';
+import 'package:medi_team/src/screens/covid19.dart';
 import 'package:medi_team/src/screens/homePageWithAuth.dart';
 import 'package:medi_team/src/screens/homePageWithoutAuth.dart';
 import 'package:medi_team/src/screens/pictures.dart';
@@ -19,8 +21,10 @@ switchScreen(int index, BuildContext context) async {
       NavigatorPush.navigatorPushReplacement(context, Pictures());
       break;
     case 2:
+      NavigatorPush.navigatorPushReplacement(context, Chatbot());
       break;
     case 3:
+      NavigatorPush.navigatorPushReplacement(context, Covid19());
       break;
   }
 }

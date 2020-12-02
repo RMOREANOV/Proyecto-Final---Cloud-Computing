@@ -861,7 +861,6 @@ class BookallDataMedicalConsultationtate
     Widget emailCreatePatientInput() {
       return Expanded(
         flex: 3,
-        //padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 12.5),
         child: new TextFormField(
             controller: emailCreatePatientController,
             maxLines: 1,

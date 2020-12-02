@@ -20,7 +20,30 @@ class PicturesState extends State<Pictures> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   Timer clockTimerNotification;
 
-  List<dynamic> pictures = [{}];
+  List<dynamic> pictures = [];
+
+  Future<dynamic> getBackendPictures() async {
+    String url = "http://10.0.2.2:1337/pictures?_sort=sort:asc";
+    http.Response response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ('Failed to load post');
+    }
+  }
+
+  getPictures() async {
+    List<dynamic> response;
+    try {
+      response = await getBackendPictures();
+      setState(() {
+        pictures = response;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   void initState() {
@@ -34,6 +57,7 @@ class PicturesState extends State<Pictures> {
             .showNotification(flutterLocalNotificationsPlugin);
       }
     });
+    getPictures();
   }
 
   @override
@@ -65,7 +89,9 @@ class PicturesState extends State<Pictures> {
                   ),
                 ),
                 child: Text(
-                  'Se encontraron x imágenes',
+                  pictures.length == 1
+                      ? 'Se encontró ${pictures.length} imagen'
+                      : 'Se encontraron ${pictures.length} imágenes',
                   style: TextStyle(fontSize: 16.0),
                 ),
               ),
@@ -90,21 +116,16 @@ class PicturesState extends State<Pictures> {
                                 children: [
                                   ConstrainedBox(
                                     constraints: BoxConstraints(minHeight: 200),
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Center(
-                                        child: Text(
-                                          "Imagen",
-                                          style: new TextStyle(fontSize: 40),
-                                        ),
-                                      ),
+                                    child: Image.network(
+                                      "http://10.0.2.2:1337" +
+                                          pictures[index]['image']['url'],
                                     ),
                                   ),
                                   Container(
                                     width: double.infinity,
                                     padding: EdgeInsets.all(5.0),
                                     color: Colors.grey.withOpacity(0.1),
-                                    child: Text("Descripción",
+                                    child: Text(pictures[index]['description'],
                                         textAlign: TextAlign.justify,
                                         style: new TextStyle(fontSize: 14)),
                                   )
@@ -122,7 +143,7 @@ class PicturesState extends State<Pictures> {
                                       width: 1,
                                     ),
                                   ),
-                                  child: Text("Título",
+                                  child: Text(pictures[index]['title'],
                                       style: new TextStyle(
                                           fontSize: 12,
                                           color: Colors.black.withOpacity(0.75),

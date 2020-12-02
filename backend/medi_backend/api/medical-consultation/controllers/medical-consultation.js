@@ -63,20 +63,20 @@ module.exports = {
         const genders = await strapi.services.gender.find({});
         const specialties = await strapi.services.specialty.find({_sort: 'name:asc'}, ['doctors','doctors.photo']);
         const medicalConsultations = await strapi.services['medical-consultation'].find({isVisible: true, _sort: 'datetime:asc'});
-        var doctorsIdInmedicalConsultations = []
+        var doctorsIdInMedicalConsultations = []
         for(var i=0;i<medicalConsultations.length;i++){
             if(medicalConsultations[i]['patient']!=null){
                 medicalConsultations.splice(i,1);
                 i--;
             }else{
-                if(!doctorsIdInmedicalConsultations.includes(medicalConsultations[i]['doctor']['id'])){
-                    doctorsIdInmedicalConsultations.push(medicalConsultations[i]['doctor']['id']);
+                if(!doctorsIdInMedicalConsultations.includes(medicalConsultations[i]['doctor']['id'])){
+                    doctorsIdInMedicalConsultations.push(medicalConsultations[i]['doctor']['id']);
                 }
             }
         }
         for(var i=0;i<specialties.length;i++){
             for(var j=0;j<specialties[i]['doctors'].length;j++){
-                if(!doctorsIdInmedicalConsultations.includes(specialties[i]['doctors'][j]['id'])){
+                if(!doctorsIdInMedicalConsultations.includes(specialties[i]['doctors'][j]['id'])){
                     specialties[i]['doctors'].splice(j,1);
                     j--;
                 }

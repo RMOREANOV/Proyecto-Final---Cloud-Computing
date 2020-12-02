@@ -1,0 +1,134 @@
+{
+  "name": "Chat Bot",
+  "locale": "es-ES",
+  "data": [
+    {
+      "intent": "agent.quien",
+      "utterances": [
+        "quien eres",
+        "como te llamas"
+      ],
+      "answers": [
+        "Hola, soy MeditBot y estoy aquí para ayudarte en las dudas que tengas."
+      ]
+    },
+    {
+      "intent": "agent.somos",
+      "utterances": [
+        "que son",
+        "quienes son ustedes",
+        "que clinica son",
+        "que experiencia tienen",
+        "cual es la experiencia",
+        "cuantos años de experiencia tienen"
+      ],
+      "answers": [
+        "Somos la clínica Medi Team con más de 8 años de experiencia cuidando la salud de todos nuestros pacientes."
+      ]
+    },
+    {
+      "intent": "agent.ubicacion",
+      "utterances": [
+        "donde estan",
+        "donde puedo encontrarlos",
+        "cual es la direccion",
+        "que direccion estan"
+      ],
+      "answers": [
+        "Estamos ubicados en la Mz D Lt.40 Señor de los Milagros - SMP al frente del grifo Repsol y al costado del Tambo."
+      ]
+    },
+    {
+      "intent": "agent.telefono",
+      "utterances": [
+        "algun telefono para contactarlos",
+        "a que telefono puedo llamarles",
+        "algun celular para contactarlos",
+        "a que celular puedo llamarles"
+      ],
+      "answers": [
+        "Llámanos al número 987654321 para otras dudas."
+      ]
+    },
+    {
+      "intent": "agent.experiencia",
+      "utterances": [
+        "experiencia doctor o doctores",
+        "experiencia profesional o profesionales",
+        "cual es la experiencia de los profesionales o doctores",
+        "que experiencia tienen los profesionales o doctores",
+        "cuantos años de experiencia tienen los profesionales o doctores",
+        "cuanta experiencia tienen los profesionales o doctores"
+      ],
+      "answers": [
+        "Todos nuestros profesionales cuentan con al menos 10 años de experiencia cuidando la salud de sus pacientes."
+      ]
+    },
+    {
+      "intent": "agent.dia",
+      "utterances": [
+        "horario",
+        "que dia atienden",
+        "que dia abren",
+        "que dia puedo ir",
+        "que clinica son",
+        "cuando abren",
+        "cuando puedo ir",
+        "los domingos abren",
+        "los domingos estan disponibles",
+        "los domingos atienden",
+        "puedo ir los domingos"
+      ],
+      "answers": [
+        "Atendemos de Lunes a Sábados de 8 de la mañana a 8 de la noche."
+      ]
+    },
+    {
+      "intent": "agent.duracion",
+      "utterances": [
+        "cuanto dura una consulta medica",
+        "cuanto tarda una consulta medica",
+        "cuanto tiempo puedo estar o permanecer en las consultas medicas",
+        "que tiempo dura la consulta medica",
+        "que duración tiene una consulta medica"
+      ],
+      "answers": [
+        "Las consultas médicas tienen una duración máxima de 30 minutos."
+      ]
+    },
+    {
+      "intent": "agent.precio",
+      "utterances": [
+        "cual es el precio de la consulta medica",
+        "que precio tiene una consulta medica",
+        "cuanto cuesta una consulta medica",
+        "cual es el precio de una consulta medica"
+      ],
+      "answers": [
+        "Una consulta médica tiene un precio de S/.50."
+      ]
+    }
+    ,
+    {
+      "intent": "agent.pago",
+      "utterances": [
+        "cuando se pagan las consultas medicas",
+        "en que momento pago las consultas medicas",
+        "el pago es en efectivo o al contado",
+        "el pago es al inicio o al final de la consulta medica"
+      ],
+      "answers": [
+        "Las consultas médicas se deberán pagar en efectivo, al inicio y cuando sea tu turno."
+      ]
+    }
+    ,
+    {
+      "intent": "None",
+      "utterances": [
+      ],
+      "answers": [
+        "Visítanos en la Mz D Lt.40 Señor de los Milagros - SMP de Lunes a Sábados de 8 de la mañana a 8 de la noche para resolver todas tus dudas o problemas."
+      ]
+    }
+  ]
+}
