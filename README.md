@@ -18,6 +18,9 @@ A continuación se pone los pasos para tener la Aplicación 100% funcional:
 
 Para Lanzar el Backend que tiene la Base de Datos se debe acceder a la carpeta Backend y ejecutar:
 ```
+npm install
+```
+```
 npm run develop
 ```
 ### Emulador Android
@@ -28,6 +31,9 @@ Abrir algún emulador de Android
 ### Frontend
 
 Para Lanzar el Frontend que tiene la APP se debe acceder a la carpeta Frontend y ejecutar:
+```
+npm install
+```
 ```
 flutter run
 ```
