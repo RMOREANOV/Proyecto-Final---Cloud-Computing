@@ -4,7 +4,7 @@ const strapi = require('strapi');
 strapi().start();
 
 
-/my-project
+/medi_backend
 └─── api
 └─── build
 └─── config
