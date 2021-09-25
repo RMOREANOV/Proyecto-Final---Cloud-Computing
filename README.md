@@ -25,10 +25,8 @@ npm run develop
 ```
 ### Login
 
-Para Lanzar el Backend que tiene la Base de Datos se debe acceder a la carpeta Backend y ejecutar:
 ```
 email: admin@mediteam.com
-```
 password: Admin1234
 ```
 
