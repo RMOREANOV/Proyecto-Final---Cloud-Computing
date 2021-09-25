@@ -1,0 +1,30 @@
+[
+    {
+        "question":"¿Quienes Somos?",
+        "answer":"Somos la clínica Medi Team con más de 8 años de experiencia cuidando la salud de todos nuestros pacientes."
+    },
+    {
+        "question":"¿Qué días atendemos?",
+        "answer":"Atendemos de Lunes a Sábados de 8 de la mañana a 8 de la noche."
+    },
+    {
+        "question":"¿Cuánto se tardan en que las consultas médicas sean aprobadas?",
+        "answer":"Las consultas médicas son aprobadas dentro de las primeras horas."
+    },
+    {
+        "question":"¿Cuál es el precio de la consultas médicas?",
+        "answer":"Las consultas médicas tienen un precio de S/.50."
+    },
+    {
+        "question":"¿Cuándo se pagan las consultas médicas?",
+        "answer":"Las consultas médicas se deberán pagar en efectivo y cuando sea su turno."
+    },
+    {
+        "question":"¿Cuánto duran las consultas médicas?",
+        "answer":"Las consultas médicas tienen una duración máxima de 30 minutos."
+    },
+    {
+        "question":"¿Cuánta experiencia tiene nuestros profesionales?",
+        "answer":"Todos nuestros profesionales cuentan con al menos 10 años de experiencia."
+    }
+]
