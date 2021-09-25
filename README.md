@@ -26,7 +26,6 @@ npm run develop
 ### Login
 email: admin@mediteam.com
 ```
-
 password: Admin1234
 ```
 
