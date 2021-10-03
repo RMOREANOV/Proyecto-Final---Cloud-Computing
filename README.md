@@ -23,13 +23,18 @@ npm install
 ```
 npm run develop
 ```
-### Login
+### Login Backend
 
 ```
 email: admin@mediteam.com
 password: Admin1234
 ```
+### Login Frontend
 
+```
+email: paciente1@gmail.com
+password: Paciente1
+```
 ### Emulador Android
 Procurar usar la última versión de Android para evitar problemas:
 ```
